@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Golf Handicap Graph</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <canvas id="myChart" width="800" height="400"></canvas>
+  <script>
+    // Exempeldata – byt gärna ut!
+    const rounds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const handicap = [20, 19, 18, 17, 17, 16, 15, 15, 14, 13];
+
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: rounds,
+        datasets: [{
+          label: 'Handikapp över tid',
+          data: handicap,
+          fill: false,
+          borderColor: 'blue',
+          tension: 0.1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top'
+          }
+        },
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Antal rundor'
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Handikapp'
+            },
+            suggestedMin: 0
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
