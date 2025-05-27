@@ -1,57 +1,70 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Golf Handicap Graph</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golf Handicap Graph</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+<style>
+  body { font-family: sans-serif; padding: 20px; }
+</style>
 </head>
 <body>
-  <canvas id="myChart" width="800" height="400"></canvas>
-  <script>
-    // Exempeldata – byt gärna ut!
-    const rounds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    const handicap = [20, 19, 18, 17, 17, 16, 15, 15, 14, 13];
 
-    const ctx = document.getElementById('myChart').getContext('2d');
-    const myChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: rounds,
-        datasets: [{
-          label: 'Handikapp över tid',
-          data: handicap,
-          fill: false,
-          borderColor: 'blue',
-          tension: 0.1
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            display: true,
-            position: 'top'
-          }
-        },
-        scales: {
-          x: {
-            title: {
-              display: true,
-              text: 'Antal rundor'
-            }
-          },
-          y: {
-            title: {
-              display: true,
-              text: 'Handikapp'
-            },
-            suggestedMin: 0
-          }
-        }
+<canvas id="myChart" width="800" height="400"></canvas>
+
+<script>
+const rounds = Array.from({length: 126}, (_, i) => i + 1);
+const handicap = [
+  13.2, 12.6, 12.6, 12.6, 8.5, 8.5, 9.9, 8.5, 9.9, 9.9,
+  10, 10, 10, 10.5, 10.5, 10.8, 10.8, 11.2, 11.1, 11,
+  10.7, 10.5, 10.2, 9.9, 10.4, 11.1, 11.1, 11.1, 11.2, 11.2,
+  11.8, 11.8, 11.8, 11.9, 11.9, 11.9, 12, 12.6, 12, 13.1,
+  13.5, 13.5, 13.5, 16.1, 16.1, 16.2, 16.2, 16.8, 16.8, 16.8,
+  16.8, 16.8, 16.9, 17, 18.4, 17.9, 17.8, 18.1, 18.1, 17.9,
+  17.1, 17.1, 17.1, 17.1, 16.1, 16.5, 15.6, 15.6, 15.5, 15.5,
+  15.5, 14.6, 13.8, 13.8, 14.1, 13.8, 14.1, 14.6, 14.6, 14.6,
+  15, 15, 14.9, 14.3, 14.8, 14.8, 15.3, 15.3, 14.8, 15.3,
+  14.2, 14.5, 15.3, 15.2, 15.2, 15.4, 15.4, 15.6, 15.6, 15.6,
+  15.6, 15.4, 15.5, 16.3, 16.8, 16.4, 15.7, 15.7, 15.2, 15.6,
+  16.2, 16.9, 16.9, 16.7, 16.7, 16.7, 16.7, 16.7, 16.6, 16.6,
+  16.6, 16.8, 16.8, 15.9, 15.8, 15.3
+];
+
+const ctx = document.getElementById('myChart').getContext('2d');
+const myChart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: rounds,
+    datasets: [{
+      label: 'Handikapp',
+      data: handicap,
+      borderColor: 'rgba(54, 162, 235, 1)',
+      backgroundColor: 'rgba(54, 162, 235, 0.2)',
+      pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+      pointBorderColor: '#fff',
+      pointRadius: 3,
+      pointHoverRadius: 5,
+      fill: false,
+      tension: 0.3
+    }]
+  },
+  options: {
+    plugins: {
+      legend: { display: false }, // Legenden borttagen
+      zoom: {
+        pan: { enabled: true, mode: 'xy' },
+        zoom: { wheel: { enabled: true }, pinch: { enabled: true }, mode: 'xy' }
       }
-    });
-  </script>
+    },
+    scales: {
+      x: { title: { display: true, text: 'Antal rundor' }, grid: { display: false }},
+      y: { title: { display: true, text: 'Handikapp' }, grid: { display: false }, suggestedMin: 0 }
+    }
+  }
+});
+</script>
+
 </body>
 </html>
